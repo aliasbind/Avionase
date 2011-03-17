@@ -146,7 +146,6 @@ public class MyMap extends javax.swing.JFrame {
         jButton100 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -951,14 +950,11 @@ public class MyMap extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Courier New", 0, 26)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Courier New", 0, 26));
         jLabel1.setText("A B C D E F G H I J");
 
-        jLabel2.setFont(new java.awt.Font("Courier New", 0, 26)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Courier New", 0, 26));
         jLabel2.setText("<html>1\n<br>2\n<br>3\n<br>4\n<br>5\n<br>6\n<br>7\n<br>8\n<br>9\n<br>10\n</html>\n");
-
-        jLabel4.setFont(new java.awt.Font("Courier New", 0, 26)); // NOI18N
-        jLabel4.setText("1");
 
         jCheckBox1.setText("Ready");
 
@@ -1180,11 +1176,6 @@ public class MyMap extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(71, 71, 71))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(196, 196, 196)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(361, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1318,11 +1309,6 @@ public class MyMap extends javax.swing.JFrame {
                                     .addComponent(jButton80, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton48, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(25, 25, 25))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(106, 106, 106)
-                    .addComponent(jLabel4, 0, 0, Short.MAX_VALUE)
-                    .addGap(273, 273, 273)))
         );
 
         pack();
@@ -1465,7 +1451,6 @@ public class MyMap extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 
 }
