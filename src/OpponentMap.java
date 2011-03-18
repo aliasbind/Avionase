@@ -1,25 +1,26 @@
 import java.awt.Color;
 import java.awt.Component;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 
 
-public class OpponentMap extends javax.swing.JFrame {
+public class OpponentMap extends javax.swing.JFrame implements Serializable {
 
     private Socket socket;
     public OpponentMap(Socket socket) {
         this.socket = socket;
         initComponents();
         Component[] components = this.getContentPane().getComponents();
-        int i;
+        
+        int i, q=0;
         for(i=0; i<components.length; i++) {
             if(components[i] instanceof JButton) {
-                 ((JButton) components[i]).setName("B" + i);
+                 ((JButton) components[i]).setName("B" + q++);
             }
         }
     }
@@ -1298,11 +1299,14 @@ public class OpponentMap extends javax.swing.JFrame {
             button.setBackground(Color.white);
         else button.setBackground(Color.black);
         hitOpponent=false;
-        System.out.println(button.getName());
+        //System.out.println(button.getName());
 
         try {
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-            dos.writeUTF(button.getName());
+            PrintWriter pos = new PrintWriter(socket.getOutputStream());
+            String toSend = "SEND" + button.getName();
+            System.out.println("SENDING: " + toSend);
+            pos.println(toSend);
+            pos.flush();
         } catch (IOException ex) {
             Logger.getLogger(OpponentMap.class.getName()).log(Level.SEVERE, null, ex);
         }

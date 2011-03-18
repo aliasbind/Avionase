@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Component;
+import java.io.Serializable;
 import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author Myka
  */
-public class MyMap extends javax.swing.JFrame {
+public class MyMap extends javax.swing.JFrame implements Serializable {
 
     /** Creates new form MyMap */
     private Socket socket;
@@ -27,12 +28,14 @@ public class MyMap extends javax.swing.JFrame {
         this.socket = socket;
         initComponents();
         Component[] components = this.getContentPane().getComponents();
-        int i;
+
+        int i, q=0;
         for(i=0; i<components.length; i++) {
             if(components[i] instanceof JButton) {
-                 ((JButton) components[i]).setName("B" + i);
+                 ((JButton) components[i]).setName("B" + q++);
             }
         }
+        new Receiver(socket).start();
     }
 
     /** This method is called from within the constructor to
@@ -1332,7 +1335,7 @@ public class MyMap extends javax.swing.JFrame {
         }
         pressedButtons++;
         button.setBackground(colors[currentColor]);
-        System.out.println(button.getName());
+        //System.out.println(button.getName());
         
     }//GEN-LAST:event_ButtonHandler
 
