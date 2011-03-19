@@ -1,7 +1,10 @@
 import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -9,7 +12,8 @@ import javax.swing.JOptionPane;
 
 public class Start extends javax.swing.JFrame {
 
-    
+    MyMap MMap;
+    OpponentMap OMap;
     public Start() {
         initComponents();
     }
@@ -75,10 +79,13 @@ public class Start extends javax.swing.JFrame {
             socket = ssocket.accept();
             JOptionPane.showMessageDialog(null,"Connected. ");
             this.setVisible(false);
-            MyMap MMap = new MyMap(socket);
+            MMap = new MyMap(socket);
             MMap.setVisible(true);
-            OpponentMap OMap=new OpponentMap(socket);
+            OMap=new OpponentMap(socket);
             OMap.setVisible(true);
+
+            new Receiver(socket, this).start();
+            
         } catch (IOException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,12 +96,16 @@ public class Start extends javax.swing.JFrame {
     private void JoinHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JoinHandler
        Socket clientSocket = null;
         try {
-            clientSocket = new Socket("localhost", 6666);
+            String str = JOptionPane.showInputDialog(null, "Introdu ip-ul host-ului: ");
+            clientSocket = new Socket(str, 6666);
             this.setVisible(false);
-            MyMap MMap = new MyMap(clientSocket);
+            MMap = new MyMap(clientSocket);
             MMap.setVisible(true);
-            OpponentMap OMap=new OpponentMap(clientSocket);
+            OMap=new OpponentMap(clientSocket);
             OMap.setVisible(true);
+
+            new Receiver(clientSocket, this).start();
+               
         } catch (UnknownHostException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -103,16 +114,6 @@ public class Start extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JoinHandler
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Start().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

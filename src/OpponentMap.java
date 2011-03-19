@@ -12,6 +12,7 @@ import javax.swing.JButton;
 public class OpponentMap extends javax.swing.JFrame implements Serializable {
 
     private Socket socket;
+    private JButton lastButton;
     public OpponentMap(Socket socket) {
         this.socket = socket;
         initComponents();
@@ -1292,20 +1293,20 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean hitOpponent=true;
     private void ButtonHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonHandler
-        JButton button= (JButton) evt.getSource();
-        if (hitOpponent)
-            button.setBackground(Color.white);
-        else button.setBackground(Color.black);
-        hitOpponent=false;
+        JButton button = (JButton) evt.getSource();
+        lastButton = button;
+
+        Color defaultColor = new Color(238, 238, 238);
+        if(defaultColor.getRGB() != button.getBackground().getRGB()) {
+            return;
+        }
+        
         //System.out.println(button.getName());
 
         try {
             PrintWriter pos = new PrintWriter(socket.getOutputStream());
-            String toSend = "SEND" + button.getName();
-            System.out.println("SENDING: " + toSend);
-            pos.println(toSend);
+            pos.println(button.getName());
             pos.flush();
         } catch (IOException ex) {
             Logger.getLogger(OpponentMap.class.getName()).log(Level.SEVERE, null, ex);
@@ -1425,5 +1426,14 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
+    synchronized void hitResult(boolean b) {
+        if(b) {
+            lastButton.setBackground(Color.black);
+        }
+        else {
+            lastButton.setBackground(Color.white);
+        }
+    }
 
 }
