@@ -69,7 +69,11 @@ public class Start extends javax.swing.JFrame {
     private void HostHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HostHandler
         ServerSocket ssocket = null;
         try {
-            ssocket = new ServerSocket(6666);
+            String portstr = JOptionPane.showInputDialog(null, "Port: (default 6666)");
+            if(!portstr.isEmpty())
+                ssocket = new ServerSocket(Integer.parseInt(portstr));
+            else
+                ssocket = new ServerSocket(6666);
         } catch (IOException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,7 +101,13 @@ public class Start extends javax.swing.JFrame {
        Socket clientSocket = null;
         try {
             String str = JOptionPane.showInputDialog(null, "Introdu ip-ul host-ului: ");
-            clientSocket = new Socket(str, 6666);
+            int port = 6666;
+            if(str.contains(":")) {
+                String portstr = str.substring(str.lastIndexOf(":") + 1);
+                port = Integer.parseInt(portstr);
+                str = str.substring(0, str.lastIndexOf(":"));
+            }
+            clientSocket = new Socket(str, port);
             this.setVisible(false);
             MMap = new MyMap(clientSocket);
             MMap.setVisible(true);

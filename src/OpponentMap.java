@@ -21,7 +21,9 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
         int i, q=0;
         for(i=0; i<components.length; i++) {
             if(components[i] instanceof JButton) {
-                 ((JButton) components[i]).setName("B" + q++);
+                JButton button = (JButton) components[i];
+                 button.setName("B" + q++);
+                 button.setEnabled(false);
             }
         }
     }
@@ -136,7 +138,7 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Courier New", 0, 26)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Courier New", 0, 26));
         jLabel1.setText("A B C D E F G H I J");
 
         jButton100.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -203,7 +205,7 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Courier New", 0, 26)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Courier New", 0, 26));
         jLabel2.setText("<html>1\n<br>2\n<br>3\n<br>4\n<br>5\n<br>6\n<br>7\n<br>8\n<br>9\n<br>10\n</html>\n");
 
         jButton1.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -1303,7 +1305,7 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
         }
         
         //System.out.println(button.getName());
-
+        this.buttonLock(false);
         try {
             PrintWriter pos = new PrintWriter(socket.getOutputStream());
             pos.println(button.getName());
@@ -1436,4 +1438,14 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
         }
     }
 
+    public void buttonLock(boolean state) {
+        int i;
+        Component[] components = this.getContentPane().getComponents();
+        for(i=0; i<components.length; i++) {
+            if(components[i] instanceof JButton) {
+                JButton button = (JButton) components[i];
+                button.setEnabled(state);
+            }
+        }
+    }
 }

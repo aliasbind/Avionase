@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -31,8 +30,11 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
     /** Creates new form MyMap */
     private Socket socket;
     private Color defaultColor = new Color(238, 238, 238);
+    public boolean readyMe;
+
     public MyMap(Socket socket) {
         this.socket = socket;
+        readyMe = false;
         initComponents();
         Component[] components = this.getContentPane().getComponents();
 
@@ -160,6 +162,11 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setMaximumSize(new java.awt.Dimension(25, 25));
         jButton1.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -1372,6 +1379,7 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
         JCheckBox checkbox = (JCheckBox) evt.getSource();
         System.out.println(checkbox.isSelected());
 
+        readyMe = checkbox.isSelected();
         try {
             PrintWriter pos = new PrintWriter(socket.getOutputStream());
 
@@ -1387,6 +1395,16 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(OpponentMap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ReadyCheckbox
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            PrintWriter pos = new PrintWriter(socket.getOutputStream());
+            pos.println("RAGEQUIT");
+            pos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(MyMap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
     * @param args the command line arguments
@@ -1524,13 +1542,14 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
         for(i=0; i<components.length; i++) {
             if(components[i] instanceof JButton) {
                 JButton button = (JButton) components[i];
-                if(button.getName().compareTo(msg) == 0 &&
-                        button.getText().compareTo("X") != 0) {
-                    button.setBackground(Color.darkGray);
+                if(button.getName().compareTo(msg) == 0) {
                     
-                    if(button.getBackground().getRGB() != defaultColor.getRGB()) {
+                    
+                    if(button.getBackground().getRGB() != defaultColor.getRGB() &&
+                       button.getBackground().getRGB() != Color.black.getRGB()) {
                         try {
                             PrintWriter pos = new PrintWriter(socket.getOutputStream());
+                            button.setBackground(Color.black);
                             pressedButtons--;
                             if(pressedButtons == 0) {
                                 JOptionPane.showMessageDialog(null, "You lose!");
@@ -1540,8 +1559,11 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
                                 socket.close();
                                 System.exit(0);
                             }
-                            pos.println("DIRECTHIT");
-                            pos.flush();
+                            else {
+                                pos.println("DIRECTHIT");
+                                pos.flush();
+                            }
+                            
                         } catch (IOException ex) {
                             Logger.getLogger(MyMap.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -1551,15 +1573,29 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
                             PrintWriter pos = new PrintWriter(socket.getOutputStream());
                             pos.println("MISS");
                             pos.flush();
+                            button.setBackground(Color.white);
                         } catch (IOException ex) {
                             Logger.getLogger(MyMap.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-
                     break;
                 }
             }
         }
     }
 
+    public void lockCheckbox() {
+        jCheckBox1.setEnabled(false);
+    }
+
+    public void buttonLock(boolean state) {
+        int i;
+        Component[] components = this.getContentPane().getComponents();
+        for(i=0; i<components.length; i++) {
+            if(components[i] instanceof JButton) {
+                JButton button = (JButton) components[i];
+                button.setEnabled(state);
+            }
+        }
+    }
 }
