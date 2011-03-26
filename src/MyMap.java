@@ -1552,9 +1552,9 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
                             button.setBackground(Color.black);
                             pressedButtons--;
                             if(pressedButtons == 0) {
-                                JOptionPane.showMessageDialog(null, "You lose!");
                                 pos.println("LOST");
                                 pos.flush();
+                                JOptionPane.showMessageDialog(null, "You lose!");
                                 pos.close();
                                 socket.close();
                                 System.exit(0);
