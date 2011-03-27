@@ -1551,17 +1551,15 @@ public class MyMap extends javax.swing.JFrame implements Serializable {
                             PrintWriter pos = new PrintWriter(socket.getOutputStream());
                             button.setBackground(Color.black);
                             pressedButtons--;
-                            if(pressedButtons == 0) {
+                            pos.println("DIRECTHIT");
+                                pos.flush();
+                            if(pressedButtons == 0) {                               
                                 pos.println("LOST");
                                 pos.flush();
                                 JOptionPane.showMessageDialog(null, "You lose!");
                                 pos.close();
                                 socket.close();
                                 System.exit(0);
-                            }
-                            else {
-                                pos.println("DIRECTHIT");
-                                pos.flush();
                             }
                             
                         } catch (IOException ex) {
