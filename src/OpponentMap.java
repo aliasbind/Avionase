@@ -137,6 +137,11 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
         jButton84 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Courier New", 0, 26));
         jLabel1.setText("A B C D E F G H I J");
@@ -1314,6 +1319,16 @@ public class OpponentMap extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(OpponentMap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ButtonHandler
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            PrintWriter pos = new PrintWriter(socket.getOutputStream());
+            pos.println("RAGEQUIT");
+            pos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(MyMap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
   
 //    public static void main(String args[]) {
