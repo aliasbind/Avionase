@@ -10,21 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * MyMap.java
- *
- * Created on Mar 17, 2011, 11:33:34 AM
- */
-
-/**
- *
- * @author Myka
- */
 public class MyMap extends javax.swing.JFrame implements Serializable {
 
     /** Creates new form MyMap */
