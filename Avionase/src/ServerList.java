@@ -3,8 +3,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,8 +23,8 @@ public class ServerList extends javax.swing.JFrame {
         this.mainWindow=mainWindow;
 
 
-        Registry registry = LocateRegistry.getRegistry("localhost", port);
-	AviInterface AviInt = (AviInterface) registry.lookup("AviClass");
+        Registry registry = LocateRegistry.getRegistry("188.25.240.218", port);
+        AviInterface AviInt = (AviInterface) registry.lookup("AviClass");
         System.out.println(AviInt.getServers());
 
         ArrayList <String> servers = AviInt.getServers();
@@ -115,7 +115,7 @@ public class ServerList extends javax.swing.JFrame {
             this.setVisible(false);
             mainWindow.MMap = new MyMap(clientSocket);
             mainWindow.MMap.setVisible(true);
-            mainWindow.OMap=new OpponentMap(clientSocket);
+            mainWindow.OMap = new OpponentMap(clientSocket);
             mainWindow.OMap.setVisible(true);
 
             new Receiver(clientSocket, mainWindow).start();

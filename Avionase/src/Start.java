@@ -93,7 +93,7 @@ public class Start extends javax.swing.JFrame {
 
         try {
             System.out.println("Se creaza socket catre main server:");
-            new Socket("localhost", 6667);
+            new Socket("188.25.240.218", 6667);
             System.out.println("S-a creat!");
         } catch (UnknownHostException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
